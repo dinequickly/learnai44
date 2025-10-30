@@ -42,8 +42,8 @@ export default function LoginPage() {
         })
         if (error) throw error
         setMessage('Successfully logged in!')
-        // Redirect to home or dashboard
-        window.location.href = '/'
+        // Redirect to dashboard
+        window.location.href = '/dashboard'
       }
     } catch (error: any) {
       setError(error.message || 'An error occurred')

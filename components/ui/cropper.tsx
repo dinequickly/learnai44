@@ -1,6 +1,6 @@
 "use client";
 
-import type { Dispatch, SetStateAction } from "react";
+import type { Dispatch, SetStateAction, ReactElement } from "react";
 import type { Area } from "react-easy-crop";
 import { cloneElement, useRef, useState } from "react";
 import EasyCropper from "react-easy-crop";
@@ -80,7 +80,7 @@ async function getCroppedImg(imageSrc: string, pixelCrop: Area) {
 }
 
 interface CropperProps {
-  children: JSX.Element;
+  children: ReactElement;
   aspect?: number;
   afterCrop?: (file: File) => void;
 }
@@ -91,7 +91,7 @@ const Cropper = ({ children, aspect, afterCrop }: CropperProps) => {
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
-  const setFileRef = useRef<Dispatch<SetStateAction<File | undefined>>>();
+  const setFileRef = useRef<Dispatch<SetStateAction<File | undefined>> | undefined>(undefined);
 
   const onCropComplete = (_: Area, croppedAreaPixels: Area) => {
     setCroppedAreaPixels(croppedAreaPixels);
@@ -139,7 +139,7 @@ const Cropper = ({ children, aspect, afterCrop }: CropperProps) => {
 
   return (
     <>
-      {cloneElement(children, { onChange })}
+      {cloneElement(children, { onChange } as any)}
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent>
           <DialogHeader>
@@ -168,7 +168,7 @@ const Cropper = ({ children, aspect, afterCrop }: CropperProps) => {
             min={1}
             max={3}
             step={0.1}
-            onValueChange={(value) => {
+            onValueChange={(value: number[]) => {
               const zoomValue = value[0];
               if (zoomValue) {
                 setZoom(zoomValue);

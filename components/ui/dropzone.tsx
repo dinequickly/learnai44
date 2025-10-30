@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, ReactElement } from "react";
 import { useDropzone } from "react-dropzone";
 
 import { cn } from ".";
@@ -11,7 +11,7 @@ export type DropzoneProps = React.InputHTMLAttributes<HTMLInputElement> & {
     file: File,
     setCurrentFile: React.Dispatch<React.SetStateAction<File | undefined>>,
   ) => void;
-  children?: JSX.Element;
+  children?: ReactElement;
 };
 
 const Dropzone = React.forwardRef<HTMLInputElement, DropzoneProps>(
